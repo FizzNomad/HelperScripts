@@ -42,8 +42,13 @@ update_or_create_timer() {
 }
 
 read -p "Enter a name for the systemd service and timer (e.g., mycustomtimer): " SERVICE_NAME
+read -p "Enter the full path to the script you want to run (e.g., /home/user/myscript.sh): " SCRIPT_PATH
 
-SCRIPT_PATH="/home/user/myscript.sh"
+if [ ! -f "$SCRIPT_PATH" ]; then
+    echo "Script not found at the specified path. Please check the path and try again."
+    exit 1
+fi
+
 DESCRIPTION="Custom systemd timer for ${SERVICE_NAME}"
 USER=$(whoami)
 
