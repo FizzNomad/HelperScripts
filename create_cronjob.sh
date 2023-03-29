@@ -19,24 +19,19 @@ validate_input() {
             fi
             ;;
         email)
-            if [[ ! $option_value =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+            if [[ ! $option_value =~ ^$|^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$ ]]; then
                 echo "Invalid email address: $option_value"
+                exit 1
+            fi
+            ;;
+        log_file)
+            if [[ ! $option_value =~ ^$|^/.*$ ]]; then
+                echo "Invalid log file path: $option_value"
                 exit 1
             fi
             ;;
     esac
 }
-
-read -p "Do you want to specify a log file path? (y/n): " LOG_CHOICE
-
-if [[ $LOG_CHOICE =~ ^[Yy]$ ]]; then
-    read -p "Enter the full path for the log file (e.g., /var/log/mycron.log): " LOG_FILE
-    if [[ ! -f $LOG_FILE ]]; then
-        touch $LOG_FILE || { echo "Error creating log file. Please check the path and try again."; exit 1; }
-    fi
-else
-    LOG_FILE="/var/log/cron.log"
-fi
 
 # Prompt the user for input
 read -p "Enter minute (0-59 or *): " MINUTE
@@ -60,8 +55,14 @@ validate_input "command" "$COMMAND"
 read -p "Enter email address to receive logs (leave blank for no email): " EMAIL
 validate_input "email" "$EMAIL"
 
+read -p "Enter log file path (leave blank for default /var/log/cron.log): " LOG_FILE
+if [[ -z $LOG_FILE ]]; then
+    LOG_FILE="/var/log/cron.log"
+fi
+validate_input "log_file" "$LOG_FILE"
+
 # Create the cron job entry
-CRON_ENTRY="$MINUTE $HOUR $DAY_OF_MONTH $MONTH $DAY_OF_WEEK $COMMAND"
+CRON_ENTRY="$MINUTE $HOUR $DAY_OF_MONTH $MONTH $DAY_OF_WEEK $COMMAND >> $LOG_FILE 2>&1"
 
 # Add email option if specified
 if [[ -n $EMAIL ]]; then
