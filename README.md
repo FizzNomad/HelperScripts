@@ -44,6 +44,7 @@ I needed to remind myself why I was doing this, and came up with the following a
 ##### Why not just use Cron?
 I probably will. I just went down this path and im still figuring out crons notation.
 
+```
 * * * * * command to be executed
 - - - - -
 | | | | |
@@ -52,6 +53,7 @@ I probably will. I just went down this path and im still figuring out crons nota
 | | --------- Day of the month (1 - 31)
 | ----------- Hour (0 - 23)
 ------------- Minute (0 - 59)
+```
 
 Ok so its not that convoluted after all:
 The * * * * * would run a script every minute because each of the five fields represents a time unit: 
