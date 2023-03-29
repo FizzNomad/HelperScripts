@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Help message
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "Usage: $0"
+    echo "Create a new cron job."
+    echo
+    echo "Options:"
+    echo "  -h, --help          show this help message and exit"
+    echo
+    exit 0
+fi
+
 # Function to validate user input
 validate_input() {
     local option_name=$1
