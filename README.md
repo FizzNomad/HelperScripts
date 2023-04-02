@@ -3,6 +3,34 @@ Just little scripts and functions to make my life better.
 
 Covid did a number on my brain so in here you will find little things i've come up with to help me out.
 
+# assistme.sh Script
+
+This script provides an interactive cheat sheet for various categories, such as Service Scanning, Web Enumeration, Public Exploits, Using Shells, Privilege Escalation, and Transferring Files. It reads the commands and their descriptions from a `commands.txt` file and displays them based on the user-selected category.
+
+## Usage
+
+1. Ensure you have the `commands.txt` file in the same directory as the `assistme.sh` script or provide the full path to the file in the script.
+2. Make sure the `assistme.sh` script is executable by running `chmod +x assistme.sh`.
+3. Run the script by executing `./assistme.sh`.
+4. Select a category by entering its corresponding number and pressing Enter.
+5. View the commands and descriptions for the selected category.
+6. Press Enter to return to the category selection menu or use Ctrl+C to exit the script.
+
+## commands.txt Format
+
+The `commands.txt` file should have the following format, using a comma `,` as the delimiter between fields:
+
+  Category1,Command1,Description1
+
+
+## Maintaining the Script
+
+To add or modify commands and descriptions for each category, simply edit the `commands.txt` file following the format specified above. To add new categories or modify existing ones, update the `options` array in the `assistme.sh` script accordingly.
+
+If you need to change the colors or text formatting in the script, you can edit the ANSI escape codes for colors at the beginning of the script.
+
+---
+
 ## create_systemd_timer.sh
 This little script automates the steps to create a systemd timer and service.
 It was a good exercise as it started fairly simple, and then I thought about the user being able to select the name of the service,or to update an existing timer. It had no error handling so that was included along with some user friendly output.
